@@ -1,0 +1,16 @@
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+
+exports_files([
+    "dev_server_template.sh",
+    "webpack.config.tpl.js",
+])
+
+# This has a dependency on @npm//webpack.
+# We don't declare it as a dependency on this target; users add it in `deps` on the target implicitly using this,
+# which allows them to use a workspace name other than `@npm`.
+nodejs_binary(
+    name = "webpack",
+    data = ["webpack_wrapper.js"],
+    entry_point = "webpack_wrapper.js",
+    visibility = ["//visibility:public"],
+)

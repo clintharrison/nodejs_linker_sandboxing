@@ -1,0 +1,20 @@
+load("//webpack_bundle:webpack_bundle.bzl", "webpack_bundle")
+
+py_binary(
+    name = "app",
+    srcs = glob(["**/*.py"]),
+    main = "src/app.py",
+)
+
+webpack_bundle(
+    name = "webpack",
+    srcs = ["index.js"],
+    entry_point = "index.js",
+    out = "bundle.js",
+    config = "webpack.config.js",
+    deps = [
+        "@npm_app//webpack",
+        "@npm_app//app-root-path",
+        "@npm_app//lodash",
+    ],
+)
